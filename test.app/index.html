@@ -5,32 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test App</title>
     <style>
-        body, html {
-            background-color: #1e1e1e;
-            color: #d4d4d4;
-            font-family: 'Inter', sans-serif, system-ui;
-            height: 100%;
-            margin: 0;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #2c2c2e;
+            color: #f5f5f7;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
             text-align: center;
-            flex-direction: column;
+        }
+        .container {
+            padding: 2rem;
         }
         h1 {
             font-size: 2rem;
-            margin: 0;
+            margin-bottom: 1rem;
         }
         p {
-            color: #aaa;
-            margin-top: 0.5rem;
+            font-size: 1rem;
+            color: #86868b;
+        }
+        button {
+            background-color: #007aff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-top: 1.5rem;
+        }
+        button:hover {
+            background-color: #0a84ff;
+        }
+        #response-container {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #1c1c1e;
+            border-radius: 8px;
+            min-height: 50px;
+            color: #a0a0a5;
         }
     </style>
 </head>
 <body>
-    <div>
-        <h1>✅ Test App</h1>
-        <p>If you can see this, the app was loaded successfully.</p>
+    <div class="container">
+        <h1>Backend Test App</h1>
+        <p>Click the button to get a message from the Python backend.</p>
+        <button id="test-button">Run Backend Script</button>
+        <div id="response-container">
+            </div>
     </div>
+
+    <script>
+        document.getElementById('test-button').addEventListener('click', () => {
+            const responseContainer = document.getElementById('response-container');
+            responseContainer.textContent = 'Loading...';
+
+            // Make a request to the secure backend route
+            fetch('/api/apps/test/backend.py')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        responseContainer.textContent = data.message;
+                    } else {
+                        responseContainer.textContent = `Error: ${data.error}`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch Error:', error);
+                    responseContainer.textContent = 'Failed to fetch from backend. See console for details.';
+                });
+        });
+    </script>
 </body>
 </html>
