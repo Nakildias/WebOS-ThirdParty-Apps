@@ -1,7 +1,8 @@
 {
   "id": "test",
   "name": "Test App",
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "category": "Development",
   "description": "A simple application to test the third-party app functionality and the App Market installation process.",
   "size": "0.1 MB",
   "iconUrl": "https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/aa0e541a60eebd0452e16b1ded10c93a_qg8n6Q9yBo.png"
