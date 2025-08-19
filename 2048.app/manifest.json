@@ -1,0 +1,10 @@
+{
+  "name": "2048",
+  "path": "index.html",
+  "icon": "https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/ad01ea78a9e06e491353b4a1c5b90f57_97HV8aA5rl.png",
+  "single_instance": false,
+  "default_width": 350,
+  "default_height": 525,
+  "resizable": true,
+  "admin_required": false
+}
