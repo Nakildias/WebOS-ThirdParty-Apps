@@ -1,0 +1,9 @@
+{
+  "name": "Wikipedia",
+  "path": "index.html",
+  "icon": "https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/a46df8ad3ce8ee8cdcb30c99231fe4bc_low_res_Wikipedia.png",
+  "single_instance": true,
+  "resizable": true,
+  "default_width": 960,
+  "default_height": 540
+}
