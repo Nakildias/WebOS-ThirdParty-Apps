@@ -1,0 +1,9 @@
+{
+  "name": "Discord",
+  "path": "index.html",
+  "icon": "https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/68f5a37ed65991d81308f201abd86bce_low_res_Discord.png",
+  "single_instance": true,
+  "resizable": true,
+  "default_width": 960,
+  "default_height": 540
+}
