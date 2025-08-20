@@ -3,8 +3,8 @@
   "path": "index.html",
   "icon": "https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/5dfb4c4e12ef717e6a47f11cd547ba3b_low_res_Evoland%20Legendary%20Edition.png",
   "single_instance": false,
-  "default_width": 400,
-  "default_height": 600,
+  "default_width": 450,
+  "default_height": 750,
   "resizable": true,
   "admin_required": false
 }
