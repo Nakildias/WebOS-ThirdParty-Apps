@@ -3,6 +3,6 @@
     "icon": "https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/abc93a06979387dcab2a29b1efcf28d3_low_res_mGBA.png",
     "description": "A Game Boy Advance emulator.",
     "version": "1.0",
-    "author": "Nakildias",
-    "permissions": []
+    "author": "Nakildias, endrift, gbajs2",
+    "category": "Emulators"
 }
