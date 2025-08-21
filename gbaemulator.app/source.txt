@@ -1,0 +1,9 @@
+Thanks to endrift
+https://github.com/endrift/gbajs
+
+and also
+
+Thanks to gbajs2
+https://github.com/andychase/gbajs2
+
+For making this WebOS application possible.
