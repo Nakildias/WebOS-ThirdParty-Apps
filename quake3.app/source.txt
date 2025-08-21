@@ -1,0 +1,9 @@
+Thanks to inolen
+https://github.com/inolen/quakejs
+
+and also
+
+Thanks to lrusso
+https://github.com/lrusso/Quake3
+
+For making this WebOS application possible.

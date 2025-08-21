@@ -1,0 +1,9 @@
+{
+  "name": "Quake 3 Arena",
+  "path": "Quake3.htm",
+  "icon": "https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/8a058804a31c3970d47fb2de02317b36_low_res_Quake.png",
+  "single_instance": true,
+  "resizable": true,
+  "default_width": 1280,
+  "default_height": 720
+}
