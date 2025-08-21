@@ -1,0 +1,9 @@
+{
+  "name": "Space Cadet Pinball",
+  "path": "3DPinballSpaceCadet.htm",
+  "icon": "https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/8c329f82b9512a3233c29d87ef0adaee_low_res_Space_Cadet_Pinball.png",
+  "single_instance": true,
+  "resizable": false,
+  "default_width": 1280,
+  "default_height": 720
+}

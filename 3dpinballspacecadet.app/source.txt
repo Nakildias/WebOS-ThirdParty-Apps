@@ -1,0 +1,9 @@
+Thanks to alula
+https://github.com/alula/SpaceCadetPinball
+
+and also
+
+Thanks to lrusso
+https://github.com/lrusso/3DPinballSpaceCadet
+
+For making this WebOS application possible.
