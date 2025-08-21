@@ -1,0 +1,186 @@
+:root {
+	--bg-color: #1a1a1c;
+	--primary-ui-bg: #2c2c2e;
+	--toolbar-bg: rgba(44, 44, 46, 0.7);
+	--text-primary: #f5f5f7;
+	--text-secondary: #86868b;
+	--border-color: #424245;
+	--accent-color: #007aff;
+	--modal-bg: rgba(10, 10, 10, 0.5);
+	--list-hover-bg: #4a4a4d;
+}
+
+body {
+	background-color: var(--bg-color);
+	text-align: center;
+	margin: 0;
+	color: white;
+	font-family: 'Inter', sans-serif;
+	overflow: hidden;
+	font-size: 15px;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+canvas {
+	image-rendering: pixelated;
+	image-rendering: -moz-crisp-edges;
+	image-rendering: crisp-edges;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+}
+
+
+#crash {
+margin-top: 100px;
+margin-bottom: -356px;
+}
+
+input[type=file] {
+	display: none;
+}
+
+#controls {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+height: auto;
+}
+
+#preload {
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+.gui_upload {
+	width: 90px; height: 90px;
+	cursor: pointer;
+	background-color: var(--primary-ui-bg);
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f5f5f7'%3E%3Cpath d='M9 16h6v-6h4l-8-8-8 8h4v6zm-4 2h14v2H5v-2z'/%3E%3C/svg%3E");
+	background-size: 50%; background-position: center;
+	background-repeat: no-repeat; border-radius: 24px;
+	border: 1px solid var(--border-color);
+	box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
+	transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+.gui_upload:hover {
+	transform: translateY(-5px) scale(1.05);
+	box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
+}
+
+.text-btn {
+	margin-top: 1rem;
+	font-size: 15px;
+	font-weight: 600;
+	color: var(--text-secondary);
+	cursor: pointer;
+	text-align: center;
+	width: fit-content;
+	transition: color 0.2s ease;
+}
+.text-btn:hover { color: var(--text-primary); }
+
+#ingame-toolbar {
+position: fixed; top: 20px; right: 20px;
+z-index: 999;
+background-color: var(--toolbar-bg);
+border: 1px solid var(--border-color);
+border-radius: 16px; padding: 8px;
+backdrop-filter: blur(10px);
+-webkit-backdrop-filter: blur(10px);
+box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+display: none;
+gap: 8px;
+}
+
+.icon-btn {
+	width: 48px; height: 48px; cursor: pointer;
+	background-color: transparent; background-size: 55%;
+	background-position: center; background-repeat: no-repeat;
+	border-radius: 12px; transition: background-color 0.2s ease;
+}
+.icon-btn:hover { background-color: rgba(255,255,255,0.1); }
+
+.gui_fullscreen { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f5f5f7'%3E%3Cpath d='M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z'/%3E%3C/svg%3E"); }
+#gui_sound_handler { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f5f5f7'%3E%3Cpath d='M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z'/%3E%3C/svg%3E"); }
+.gui_download { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f5f5f7'%3E%3Cpath d='M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z'/%3E%3C/svg%3E"); }
+.gui_uploadsave { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f5f5f7'%3E%3Cpath d='M9 16h6v-6h4l-8-8-8 8h4v6zm-4 2h14v2H5v-2z'/%3E%3C/svg%3E"); }
+.gui_reload { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f5f5f7'%3E%3Cpath d='M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z'/%3E%3C/svg%3E"); }
+
+.modal-overlay {
+	position: fixed; top: 0; left: 0;
+	width: 100%; height: 100%;
+	background-color: var(--modal-bg);
+	backdrop-filter: blur(8px);
+	display: none; align-items: center;
+	justify-content: center; z-index: 2000;
+}
+.modal-content {
+	background-color: var(--primary-ui-bg);
+	padding: 24px 32px; border-radius: 16px;
+	border: 1px solid var(--border-color);
+	box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+	width: 90%; max-width: 520px; position: relative;
+}
+.modal-content h2 { margin: 0 0 20px 0; font-size: 22px; color: var(--text-primary); text-align: center; }
+.modal-close {
+	position: absolute; top: 10px; right: 15px;
+	font-size: 28px; font-weight: 300;
+	color: var(--text-secondary); cursor: pointer;
+	transition: color 0.2s ease;
+}
+.modal-close:hover { color: var(--text-primary); }
+
+.gui_controls { list-style: none; padding: 0; margin: 0; }
+.gui_controls li {
+	display: flex; justify-content: space-between;
+	padding: 12px 0; border-bottom: 1px solid var(--border-color);
+	font-size: 16px;
+}
+.gui_controls li:last-child { border-bottom: none; }
+.gui_controls .gui_controls_key { color: var(--text-secondary); margin-right: 24px; }
+.gui_controls span:not(.gui_controls_key) { color: var(--text-primary); font-weight: 600; font-family: monospace; }
+
+#rom-list-container {
+max-height: 50vh; overflow-y: auto;
+border: 1px solid var(--border-color);
+border-radius: 8px;
+}
+#rom-list { list-style: none; padding: 0; margin: 0; }
+#rom-list li {
+padding: 12px 16px; font-size: 16px;
+color: var(--text-primary); cursor: pointer;
+border-bottom: 1px solid var(--border-color);
+}
+#rom-list li:last-child { border-bottom: none; }
+#rom-list li:hover { background-color: var(--list-hover-bg); }
+.rom-list-message {
+	padding: 40px 20px; text-align: center;
+	color: var(--text-secondary); font-size: 16px;
+}
+
+#instructions {
+position: absolute;
+bottom: 20px;
+color: var(--text-secondary);
+}
+
+#ingame-toolbar {
+transition: opacity 0.5s ease-in-out;
+}
+
+#ingame-toolbar.hidden {
+opacity: 0;
+pointer-events: none;
+}
+

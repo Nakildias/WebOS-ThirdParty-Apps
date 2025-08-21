@@ -1,0 +1,9 @@
+{
+  "name": "GBA Emulatorr",
+  "path": "index.html",
+  "icon": "https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/abc93a06979387dcab2a29b1efcf28d3_low_res_mGBA.png",
+  "single_instance": true,
+  "resizable": true,
+  "default_width": 800,
+  "default_height": 600
+}

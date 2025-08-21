@@ -1,0 +1,258 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>gbajs2</title>
+		<link rel="stylesheet" href="/static/third-party/apps/gbaemulator.app/resources/main.css" />
+		<script src="/static/third-party/apps/gbaemulator.app/js/util.js"></script>
+		<script src="/static/third-party/apps/gbaemulator.app/js/core.js"></script>
+		<script src="/static/third-party/apps/gbaemulator.app/js/arm.js"></script>
+		<script src="/static/third-party/apps/gbaemulator.app/js/thumb.js"></script>
+		<script src="/static/third-party/apps/gbaemulator.app/js/mmu.js"></script>
+		<script src="/static/third-party/apps/gbaemulator.app/js/io.js"></script>
+		<script src="/static/third-party/apps/gbaemulator.app/js/audio.js"></script>
+		<script src="/static/third-party/apps/gbaemulator.app/js/video.js"></script>
+		<script src="/static/third-party/apps/gbaemulator.app/js/video/proxy.js"></script>
+		<script src="/static/third-party/apps/gbaemulator.app/js/video/software.js"></script>
+		<script src="/static/third-party/apps/gbaemulator.app/js/irq.js"></script>
+		<script src="/static/third-party/apps/gbaemulator.app/js/keypad.js"></script>
+		<script src="/static/third-party/apps/gbaemulator.app/js/sio.js"></script>
+		<script src="/static/third-party/apps/gbaemulator.app/js/savedata.js"></script>
+		<script src="/static/third-party/apps/gbaemulator.app/js/gpio.js"></script>
+		<script src="/static/third-party/apps/gbaemulator.app/js/gba.js"></script>
+		<script src="/static/third-party/apps/gbaemulator.app/resources/xhr.js"></script>
+		<script src="/static/third-party/apps/gbaemulator.app/resources/biosbin.js"></script>
+
+		<script>
+			let gba;
+			let runCommands = [];
+            let romModal, controlsModal, romList, romListMessage;
+
+
+			try {
+				gba = new GameBoyAdvance();
+				gba.keypad.eatInput = true;
+				gba.setLogger(function (level, error) {
+					console.log(error);
+					gba.pause();
+					let screen = document.getElementById('screen');
+					if (screen.classList.contains('dead')) return;
+
+					let crash = document.createElement('img');
+					crash.id = 'crash';
+					crash.src = '/static/third-party/apps/gbaemulator.app/resources/crash.png';
+					screen.parentElement.insertBefore(crash, screen);
+					screen.classList.add('dead');
+				});
+			} catch (exception) {
+				gba = null;
+			}
+
+			window.onload = function () {
+				if (gba && FileReader) {
+					let canvas = document.getElementById('screen');
+					gba.setCanvas(canvas);
+					gba.logLevel = gba.LOG_ERROR;
+					gba.setBios(biosBin);
+				} else {
+					document.getElementById('controls').style.display = 'none';
+                }
+
+                setupEventListeners();
+			};
+
+            function setupEventListeners() {
+                // Modal logic
+                controlsModal = document.getElementById('controls-modal');
+                const helpBtn = document.getElementById('help-btn');
+                const closeControlsBtn = controlsModal.querySelector('.modal-close');
+
+                helpBtn.addEventListener('click', () => controlsModal.style.display = 'flex');
+                closeControlsBtn.addEventListener('click', () => controlsModal.style.display = 'none');
+                controlsModal.addEventListener('click', (e) => {
+                    if (e.target === controlsModal) controlsModal.style.display = 'none';
+                });
+
+                // ROM Modal Logic
+                romModal = document.getElementById('rom-modal');
+                const loadRomBtn = document.getElementById('load-rom-btn');
+                const closeRomBtn = romModal.querySelector('.modal-close');
+                romList = document.getElementById('rom-list');
+                romListMessage = romModal.querySelector('.rom-list-message');
+
+
+                loadRomBtn.addEventListener('click', openRomModal);
+                closeRomBtn.addEventListener('click', () => romModal.style.display = 'none');
+                romModal.addEventListener('click', (e) => {
+                    if (e.target === romModal) romModal.style.display = 'none';
+                });
+            }
+
+			function run(file) {
+                let loaderInput = document.getElementById('loader');
+                loaderInput.value = '';
+
+				gba.loadRomFromFile(file, function (result) {
+					if (result) {
+						for (let i = 0; i < runCommands.length; ++i) {
+							runCommands[i]();
+						}
+						runCommands = [];
+                        document.getElementById('preload').style.display = 'none';
+                        document.getElementById('instructions').style.display = 'none';
+						document.getElementById('ingame-toolbar').style.display = 'flex';
+						gba.runStable();
+					} else {
+						alert('Failed to load ROM.');
+					}
+				});
+			}
+
+			function reset() {
+				gba.pause();
+				gba.reset();
+
+				let crash = document.getElementById('crash');
+				if (crash) {
+					crash.parentElement.removeChild(crash);
+					let canvas = document.getElementById('screen');
+					canvas.classList.remove('dead');
+				}
+                const preloadDiv = document.getElementById('preload');
+                preloadDiv.style.display = 'flex';
+                preloadDiv.classList.remove('hidden', 'dead');
+
+
+                const instructionsDiv = document.getElementById('instructions');
+                instructionsDiv.style.display = 'block';
+                instructionsDiv.classList.remove('hidden', 'dead');
+
+				document.getElementById('ingame-toolbar').style.display = 'none';
+			}
+
+			function uploadSavedataPending(file) {
+				runCommands.push(() => gba.loadSavedataFromFile(file));
+			}
+
+			function screenshot() {
+				let data = gba.screenshot();
+				let image = new Image();
+				image.src = data;
+				let w = window.open("");
+				w.document.write(image.outerHTML);
+			}
+
+			function fullScreen() {
+				document.documentElement.requestFullscreen();
+			};
+
+            // --- ROM Modal Functions ---
+            function openRomModal() {
+                romModal.style.display = 'flex';
+                romList.innerHTML = '';
+                romListMessage.textContent = 'Loading games...';
+                romListMessage.style.display = 'block';
+                fetchAndDisplayRoms();
+            }
+
+            async function fetchAndDisplayRoms() {
+                try {
+                    const response = await fetch('/api/apps/gbaemulator/backend.py', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ action: 'list_roms' })
+                    });
+                    const data = await response.json();
+
+                    if (data.success) {
+                        if (data.roms && data.roms.length > 0) {
+                            romListMessage.style.display = 'none';
+                            data.roms.forEach(romName => {
+                                const li = document.createElement('li');
+                                li.textContent = romName;
+                                li.onclick = () => loadRomFromUrl(`/static${data.rom_path}/${romName}`, romName);
+                                romList.appendChild(li);
+                            });
+                        } else {
+                            romListMessage.textContent = data.message || 'No ROMs found.';
+                        }
+                    } else {
+                        romListMessage.textContent = `Error: ${data.error}`;
+                    }
+                } catch (error) {
+                    romListMessage.textContent = 'Failed to connect to the backend.';
+                }
+            }
+
+            async function loadRomFromUrl(url, romName) {
+                try {
+                    romModal.style.display = 'none';
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+                    const romArrayBuffer = await response.arrayBuffer();
+                    const romFile = new File([romArrayBuffer], romName);
+                    run(romFile);
+
+                } catch (error) {
+                    alert(`Load Error: Could not load the selected ROM.\n${error.message}`);
+                }
+            }
+		</script>
+	</head>
+	<body>
+        <div id="ingame-toolbar">
+            <div class="gui_fullscreen icon-btn" onclick="fullScreen()"></div>
+            <div id="gui_sound_handler" class="icon-btn" onclick="gba.audio.masterEnable = !gba.audio.masterEnable;"></div>
+            <div class="gui_download icon-btn" onclick="gba.downloadSavedata()"></div>
+            <div class="gui_uploadsave icon-btn" onclick="document.getElementById('saveloader').click()"></div>
+            <div class="gui_reload icon-btn" onclick="reset()"></div>
+        </div>
+
+		<canvas id="screen" width="240" height="160"></canvas>
+
+        <div id="controls-modal" class="modal-overlay">
+            <div class="modal-content">
+                <span class="modal-close">&times;</span>
+                <h2>Keyboard Controls</h2>
+                <ul class="gui_controls">
+                    <li><span class="gui_controls_key">Up</span> <span>Up Arrow</span></li>
+                    <li><span class="gui_controls_key">Down</span> <span>Down Arrow</span></li>
+                    <li><span class="gui_controls_key">Left</span> <span>Left Arrow</span></li>
+                    <li><span class="gui_controls_key">Right</span> <span>Right Arrow</span></li>
+                    <li><span class="gui_controls_key">A</span> <span>Z</span></li>
+                    <li><span class="gui_controls_key">B</span> <span>X</span></li>
+                    <li><span class="gui_controls_key">L</span> <span>A</span></li>
+                    <li><span class="gui_controls_key">R</span> <span>S</span></li>
+                    <li><span class="gui_controls_key">Start</span> <span>Enter</span></li>
+                    <li><span class="gui_controls_key">Select</span> <span>Backspace</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="rom-modal" class="modal-overlay">
+            <div class="modal-content">
+                <span class="modal-close">&times;</span>
+                <h2>Load Game</h2>
+                <div id="rom-list-container">
+                    <div class="rom-list-message">Loading games...</div>
+                    <ul id="rom-list"></ul>
+                </div>
+            </div>
+        </div>
+
+		<section id="controls">
+			<div id="preload">
+                <div class="gui_upload" title="Upload ROM from Computer" onclick="document.getElementById('loader').click()"></div>
+				<input id="loader" type="file" accept=".gba,.gb" onchange="run(this.files[0]);" />
+                <div id="load-rom-btn" class="text-btn">Load Game from WebOS</div>
+                <div id="help-btn" class="text-btn">Help</div>
+				<input id="saveloader" type="file" onchange="uploadSavedataPending(this.files[0]);" />
+			</div>
+		</section>
+		<section id="instructions">
+			<p>
+				Upload a GBA/GB ROM from your computer or load one from your WebOS Roms folder.
+			</p>
+		</section>
+	</body>
+</html>
