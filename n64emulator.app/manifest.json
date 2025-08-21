@@ -1,0 +1,9 @@
+{
+  "name": "N64 Emulator",
+  "path": "Nintendo64.htm",
+  "icon": "https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/920b33b2869a0d9c505bb338b729dc59_HJsGVSh3CQ.png",
+  "single_instance": true,
+  "resizable": true,
+  "default_width": 800,
+  "default_height": 600
+}

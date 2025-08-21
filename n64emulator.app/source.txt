@@ -1,0 +1,9 @@
+Thanks to nbarkhina
+https://github.com/nbarkhina/N64Wasm
+
+and also
+
+Thanks to lrusso
+https://github.com/lrusso/Nintendo64
+
+For making this WebOS application possible.
