@@ -2,25 +2,25 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>gbajs2</title>
-		<link rel="stylesheet" href="/static/third-party/apps/gbaemulator.app/resources/main.css" />
-		<script src="/static/third-party/apps/gbaemulator.app/js/util.js"></script>
-		<script src="/static/third-party/apps/gbaemulator.app/js/core.js"></script>
-		<script src="/static/third-party/apps/gbaemulator.app/js/arm.js"></script>
-		<script src="/static/third-party/apps/gbaemulator.app/js/thumb.js"></script>
-		<script src="/static/third-party/apps/gbaemulator.app/js/mmu.js"></script>
-		<script src="/static/third-party/apps/gbaemulator.app/js/io.js"></script>
-		<script src="/static/third-party/apps/gbaemulator.app/js/audio.js"></script>
-		<script src="/static/third-party/apps/gbaemulator.app/js/video.js"></script>
-		<script src="/static/third-party/apps/gbaemulator.app/js/video/proxy.js"></script>
-		<script src="/static/third-party/apps/gbaemulator.app/js/video/software.js"></script>
-		<script src="/static/third-party/apps/gbaemulator.app/js/irq.js"></script>
-		<script src="/static/third-party/apps/gbaemulator.app/js/keypad.js"></script>
-		<script src="/static/third-party/apps/gbaemulator.app/js/sio.js"></script>
-		<script src="/static/third-party/apps/gbaemulator.app/js/savedata.js"></script>
-		<script src="/static/third-party/apps/gbaemulator.app/js/gpio.js"></script>
-		<script src="/static/third-party/apps/gbaemulator.app/js/gba.js"></script>
-		<script src="/static/third-party/apps/gbaemulator.app/resources/xhr.js"></script>
-		<script src="/static/third-party/apps/gbaemulator.app/resources/biosbin.js"></script>
+		<link rel="stylesheet" href="resources/main.css" />
+		<script src="js/util.js"></script>
+		<script src="js/core.js"></script>
+		<script src="js/arm.js"></script>
+		<script src="js/thumb.js"></script>
+		<script src="js/mmu.js"></script>
+		<script src="js/io.js"></script>
+		<script src="js/audio.js"></script>
+		<script src="js/video.js"></script>
+		<script src="js/proxy.js"></script>
+		<script src="js/software.js"></script>
+		<script src="js/irq.js"></script>
+		<script src="js/keypad.js"></script>
+		<script src="js/sio.js"></script>
+		<script src="js/savedata.js"></script>
+		<script src="js/gpio.js"></script>
+		<script src="js/gba.js"></script>
+		<script src="resources/xhr.js"></script>
+		<script src="resources/biosbin.js"></script>
 
 		<script>
 			let gba;
@@ -39,7 +39,7 @@
 
 					let crash = document.createElement('img');
 					crash.id = 'crash';
-					crash.src = '/static/third-party/apps/gbaemulator.app/resources/crash.png';
+					crash.src = 'resources/crash.png';
 					screen.parentElement.insertBefore(crash, screen);
 					screen.classList.add('dead');
 				});

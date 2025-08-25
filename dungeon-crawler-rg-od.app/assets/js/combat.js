@@ -326,7 +326,7 @@ const showCombatInfo = () => {
                 </div>
             </div>
             <div id="dmg-container"></div>
-            <img src="/static/third-party/apps/dungeon-crawler-rg-od.app/assets/sprites/${enemy.image.name}${enemy.image.type}" alt="${enemy.name}" width="${enemy.image.size}" id="enemy-sprite">
+            <img src="assets/sprites/${enemy.image.name}${enemy.image.type}" alt="${enemy.name}" width="${enemy.image.size}" id="enemy-sprite">
         </div>
         <div class="battle-info-panel primary-panel" id="playerPanel">
             <p id="player-combat-info"></p>
