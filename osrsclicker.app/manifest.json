@@ -1,0 +1,10 @@
+{
+  "name": "OSRS Idle Clicker",
+  "path": "index.html",
+  "icon": "https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/62a042118d94f468191117b4eb8fefc5_low_res_Old_School_RuneScape.png",
+  "single_instance": true,
+  "default_width": 1280,
+  "default_height": 720,
+  "resizable": true,
+  "admin_required": false
+}
