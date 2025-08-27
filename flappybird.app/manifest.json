@@ -1,0 +1,9 @@
+{
+  "name": "Flappy Bird",
+  "path": "index.html",
+  "icon": "https://raw.githubusercontent.com/Nakildias/FlapPyClone/refs/heads/main/data/icon.png",
+  "single_instance": true,
+  "resizable": false,
+  "default_width": 288,
+  "default_height": 543
+}
