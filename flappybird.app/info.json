@@ -5,6 +5,6 @@
   "author": "nakildias",
   "description": "Play Flappy Bird on WebOS.",
   "size": "0.54 MB",
-  "iconUrl": "https://raw.githubusercontent.com/Nakildias/FlapPyClone/refs/heads/main/data/icon.png",
+  "iconUrl": "https://raw.githubusercontent.com/Nakildias/WebOS-ThirdParty-Apps/refs/heads/main/flappybird.app/flappybird.png",
   "category": "Games"
 }
