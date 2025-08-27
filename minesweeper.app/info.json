@@ -1,0 +1,10 @@
+{
+  "id": "minesweeeper",
+  "name": "Minesweeper",
+  "version": "1.0.0",
+  "author": "nakildias",
+  "description": "Minesweeper for WebOS.",
+  "size": "0.88 MB",
+  "iconUrl": "https://raw.githubusercontent.com/Nakildias/WebOS-ThirdParty-Apps/refs/heads/main/tetrorush.app/tetrorush_icon.png",
+  "category": "Games"
+}

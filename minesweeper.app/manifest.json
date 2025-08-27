@@ -1,0 +1,9 @@
+{
+  "name": "Minesweeper",
+  "path": "index.html",
+  "icon": "https://raw.githubusercontent.com/Nakildias/WebOS-ThirdParty-Apps/refs/heads/main/tetrorush.app/tetrorush_icon.png",
+  "single_instance": true,
+  "resizable": false,
+  "default_width": 421,
+  "default_height": 545
+}

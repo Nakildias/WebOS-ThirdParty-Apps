@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minesweeper</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --primary-color: #2c2c2c;
+            --secondary-color: #3d3d3d;
+            --border-color: #4a4a4a;
+            --font-color: #e0e0e0;
+            --accent-color: #f7b733;
+            --safe-color: #4CAF50;
+            --flag-color: #f44336;
+            --mine-color: #ff5722;
+
+            --num-1: #3498db;
+            --num-2: #2ecc71;
+            --num-3: #e74c3c;
+            --num-4: #9b59b6;
+            --num-5: #f1c40f;
+            --num-6: #1abc9c;
+            --num-7: #e67e22;
+            --num-8: #bdc3c7;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--font-color);
+            font-family: 'Roboto Mono', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            user-select: none;
+        }
+
+        #game-container {
+            background-color: var(--primary-color);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--secondary-color);
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        .display {
+            font-size: 1.8em;
+            font-weight: 700;
+            background-color: var(--bg-color);
+            padding: 5px 15px;
+            border-radius: 5px;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        #reset-button {
+            font-size: 2.5em;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        #reset-button:hover {
+            transform: scale(1.1);
+        }
+
+        #game-board {
+            display: grid;
+            border: 5px solid var(--secondary-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .tile {
+            width: 35px;
+            height: 35px;
+            background-color: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .tile:not(.revealed):hover {
+            background-color: #4f4f4f;
+        }
+
+        .tile.revealed {
+            background-color: var(--primary-color);
+            cursor: default;
+        }
+
+        .tile.flagged {
+            font-size: 1.3em;
+            color: var(--flag-color);
+        }
+
+        .tile.mine {
+            background-color: var(--mine-color);
+            font-size: 1.5em;
+        }
+
+        .c1 { color: var(--num-1); }
+        .c2 { color: var(--num-2); }
+        .c3 { color: var(--num-3); }
+        .c4 { color: var(--num-4); }
+        .c5 { color: var(--num-5); }
+        .c6 { color: var(--num-6); }
+        .c7 { color: var(--num-7); }
+        .c8 { color: var(--num-8); }
+
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <header>
+            <div id="mine-count" class="display">000</div>
+            <div id="reset-button">🙂</div>
+            <div id="timer" class="display">000</div>
+        </header>
+        <div id="game-board"></div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
