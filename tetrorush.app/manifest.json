@@ -1,0 +1,9 @@
+{
+  "name": "Tetro-Rush",
+  "path": "index.html",
+  "icon": "https://raw.githubusercontent.com/Nakildias/WebOS-ThirdParty-Apps/refs/heads/main/flappybird.app/flappybird.png",
+  "single_instance": true,
+  "resizable": false,
+  "default_width": 520,
+  "default_height": 855
+}

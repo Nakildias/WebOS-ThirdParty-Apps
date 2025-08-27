@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetro-Rush</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #e6e6e6;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .game-container {
+            display: flex;
+            border: 3px solid #505050;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        canvas {
+            background-color: #232323;
+        }
+
+        .side-panel {
+            width: 250px;
+            background-color: #1c1c1c;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-left: 3px solid #505050;
+        }
+
+        .info-box {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .info-box h2 {
+            font-size: 1.2rem;
+            margin: 0 0 10px 0;
+            font-weight: 600;
+            color: #cccccc;
+        }
+
+        .info-box p {
+            font-size: 2rem;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        #highscore {
+            color: #ffd700;
+            font-size: 1.5rem;
+        }
+
+        #highscore-label {
+            color: #ffd700;
+            font-size: 1rem;
+        }
+
+        .preview-box {
+            width: 100%;
+            height: 120px;
+            background-color: #232323;
+            border-radius: 5px;
+            border: 2px solid #505050;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .controls, .volume-control {
+            width: 100%;
+            margin-top: auto; /* Pushes to the bottom */
+        }
+
+        .volume-control {
+            text-align: center;
+        }
+
+        .volume-control label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        #volume-slider {
+            width: 80%;
+        }
+
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+        }
+
+        .modal-content {
+            background-color: #2c2c2c;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .modal-content h2 {
+            margin-top: 0;
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #start-screen-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+        #start-screen-content {
+            text-align: center;
+            color: white;
+        }
+        #start-screen-content h1 {
+            font-size: 3rem;
+        }
+        #start-button {
+            font-size: 1.2rem;
+            padding: 10px 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <canvas id="tetrorush-canvas"></canvas>
+        <div class="side-panel">
+            <div class="info-box">
+                <h2>SCORE</h2>
+                <p id="score">0</p>
+            </div>
+            <div class="info-box">
+                <h2 id="highscore-label">HIGH SCORE</h2>
+                <p id="highscore">0</p>
+            </div>
+            <div class="info-box">
+                <h2>NEXT</h2>
+                <div class="preview-box">
+                    <canvas id="next-piece-canvas"></canvas>
+                </div>
+            </div>
+            <div class="info-box">
+                <h2>HOLD</h2>
+                <div class="preview-box">
+                    <canvas id="hold-piece-canvas"></canvas>
+                </div>
+            </div>
+            <div class="info-box">
+                <h2>LEVEL: <span id="level">1</span></h2>
+                <p id="lines" style="font-size: 1.2rem;">Lines: 0</p>
+            </div>
+            <div class="controls">
+                <button id="controls-button">Controls</button>
+            </div>
+            <div class="volume-control">
+                <label for="volume-slider">Volume</label>
+                <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.3">
+            </div>
+        </div>
+    </div>
+
+    <div id="controls-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Controls</h2>
+            <p><strong>&larr; / &rarr;</strong> : Move</p>
+            <p><strong>&uarr;</strong> : Rotate</p>
+            <p><strong>&darr;</strong> : Soft Drop</p>
+            <p><strong>Space</strong> : Hard Drop</p>
+            <p><strong>H</strong> : Hold</p>
+            <p><strong>R</strong> : Restart</p>
+            <p><strong>Esc</strong> : Pause/Quit</p>
+        </div>
+    </div>
+
+    <div id="start-screen-overlay">
+        <div id="start-screen-content">
+            <h1>Tetro-Rush</h1>
+            <button id="start-button">Click to Start</button>
+        </div>
+    </div>
+
+
+    <script src="game.js"></script>
+</body>
+</html>
